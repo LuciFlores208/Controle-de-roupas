@@ -1,3 +1,11 @@
+<?php
+include_once 'conexao.php';
+$sql = "SELECT modelo.Nome AS modelo_nome, modelo.Tipo, modelo.idModelo, marca.nome AS marca_nome
+        FROM modelo
+        JOIN marca ON modelo.idMarca = marca.idMarca";
+$result = $conn->query($sql);
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -95,17 +103,19 @@ tr:nth-child(even) {
         </tr>
         </thead>
         <tbody>
+        <?php while($row = $result->fetch_assoc()): ?>
         <tr>
-            <td>1</td>
-            <td>Casaco</td>
-            <td>Inverno</td>
-            <td>Gucci</td>
-            <td><button class="apagar" onclick="apagarLinha(this)">&times;</button></td>
+        <td><?php echo $row['idModelo'] ?></td>
+        <td><?php echo $row['modelo_nome'] ?></td>
+        <td><?php echo $row['Tipo'] ?></td>
+        <td><?php echo $row['marca_nome'] ?></td>
+        <td><button class="apagar" onclick="apagarLinha(this)">&times;</button></td>
         </tr>
+        <?php endwhile; ?>
         </tbody>
          </table>
 <div class="Edicao"></div>
-    <button type="button">Editar</button>
+    
     <details>
         <summary>Adicionar</summary>
         <div style="border: 1px solid #ccc; padding: 10px; margin-top: 5px; display: flex; flex-direction: column; gap: 10px; width: fit-content;">
