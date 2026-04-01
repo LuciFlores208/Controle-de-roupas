@@ -1,3 +1,10 @@
+<?php
+include_once 'conexao.php';
+$result = $conn->query("SELECT * FROM marca");
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -73,9 +80,9 @@ tr:nth-child(even) {
     <header class="header">
         <nav class="nav">
             <ul>
-                <li><a href="AtiviSandroRoupas.html">Roupas</a></li>
-                <li><a href="AtiviSandroModelos.html">Modelos</a></li>
-                <li><a href="AtiviSandroTamanhos.html">Tamanhos</a></li>
+                <li><a href="AtiviSandroRoupas.php">Roupas</a></li>
+                <li><a href="AtiviSandroModelos.php">Modelos</a></li>
+                <li><a href="AtiviSandroTamanhos.php">Tamanhos</a></li>
             </ul>
         </nav>
     </header>
@@ -93,16 +100,18 @@ tr:nth-child(even) {
         </tr>
         </thead>
         <tbody>
+        <?php while($row = $result->fetch_assoc()): ?>
         <tr>
-            <td>1</td>
-            <td>Zara</td>
-            <td>Fast Fashion</td>
-            <td><button class="apagar" onclick="apagarLinha(this)">&times;</button></td>
+        <td><?php echo $row['idMarca'] ?></td>
+        <td><?php echo $row['Nome'] ?></td>
+        <td><?php echo $row['Tipo'] ?></td>
+        <td><button class="apagar" onclick="apagarLinha(this)">&times;</button></td>
         </tr>
+        <?php endwhile; ?>
         </tbody>
          </table>
 <div class="Edicao"></div>
-    <button type="button">Editar</button>
+   
     <details>
         <summary>Adicionar</summary>
         <div style="border: 1px solid #ccc; padding: 10px; margin-top: 5px; display: flex; flex-direction: column; gap: 10px; width: fit-content;">
