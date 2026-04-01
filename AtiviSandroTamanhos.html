@@ -1,3 +1,8 @@
+<?php
+include_once 'conexao.php';
+$result = $conn->query("SELECT * FROM tamanhos");
+
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -86,26 +91,25 @@ tr:nth-child(even) {
     <table style= "width: 70%; border-collapse: collapse; border: 1px solid black; margin: 0;">
         <thead>
         <tr>
+           <th>Identificador</th>
            <th>Tamanho</th>
-           <th>Roupa</th>
         </tr>
         </thead>
         <tbody>
+        <?php while($row = $result->fetch_assoc()): ?>
         <tr>
-            <td>P</td>
-            <td>Casaco</td>
-            <td><button class="apagar" onclick="apagarLinha(this)">&times;</button></td>
+        <td><?php echo $row['idTamanhos'] ?></td>
+        <td><?php echo $row['Tipo'] ?></td>
+        <td><button class="apagar" onclick="apagarLinha(this)">&times;</button></td>
         </tr>
+        <?php endwhile; ?>
         </tbody>
          </table>
 <div class="Edicao"></div>
-    <button type="button">Editar</button>
     <details>
         <summary>Adicionar</summary>
         <div style="border: 1px solid #ccc; padding: 10px; margin-top: 5px; display: flex; flex-direction: column; gap: 10px; width: fit-content;">
-            <label for="Roupa">Roupa:</label>
-            <input type="text" id="Roupa" name="Roupa" placeholder="Digite a peça de roupa">
-
+            
             <label for="Tamanho">Tamanho:</label>
             <input type="text" id="Tamanho" name="Tamanho" placeholder="Digite o tamanho da roupa">
 
