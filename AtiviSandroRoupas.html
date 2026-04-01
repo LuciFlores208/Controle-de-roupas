@@ -1,3 +1,18 @@
+<?php
+include_once 'conexao.php';
+$sql = "SELECT 
+    roupas.idRoupas AS roupas_nome,
+    modelo.Nome AS roupas_modelo,
+    marca.Nome AS roupas_marca,
+    tamanhos.Tipo AS roupas_tamanho,
+    roupas.Cor AS roupas_cor,
+    roupas.Sex AS roupas_sex
+FROM roupas
+JOIN marca ON roupas.idMarca = marca.idMarca
+JOIN modelo ON roupas.idModelo = modelo.idModelo
+JOIN tamanhos ON roupas.idTamanhos = tamanhos.idTamanhos";
+$result = $conn->query($sql);
+?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -73,9 +88,9 @@ tr:nth-child(even) {
     <header class="header">
         <nav class="nav">
             <ul>
-                <li><a href="AtiviSandroModelos.html">Modelos</a></li>
-                <li><a href="AtiviSandroMarcas.html">Marcas</a></li>
-                <li><a href="AtiviSandroTamanhos.html">Tamanhos</a></li>
+                <li><a href="AtiviSandroModelos.php">Modelos</a></li>
+                <li><a href="AtiviSandroMarcas.php">Marcas</a></li>
+                <li><a href="AtiviSandroTamanhos.php">Tamanhos</a></li>
             </ul>
         </nav>
     </header>
@@ -96,19 +111,20 @@ tr:nth-child(even) {
         </tr>
         </thead>
         <tbody>
+        <?php while($row = $result->fetch_assoc()): ?>
         <tr>
-            <td>1</td>
-            <td>Casaco</td>
-            <td>Gucci</td>
-            <td>Marrom</td>
-            <td>P</td>
-            <td>Fem</td>
-            <td><button class="apagar" onclick="apagarLinha(this)">&times;</button></td>
+        <td><?php echo $row['roupas_nome'] ?></td>
+        <td><?php echo $row['roupas_modelo'] ?></td>
+        <td><?php echo $row['roupas_marca'] ?></td>
+        <td><?php echo $row['roupas_cor'] ?></td> 
+        <td><?php echo $row['roupas_tamanho'] ?></td>
+        <td><?php echo $row['roupas_sex'] ?></td>
+        <td><button class="apagar" onclick="apagarLinha(this)">&times;</button></td>
         </tr>
+        <?php endwhile; ?>
         </tbody>
          </table>
 <div class="Edicao"></div>
-    <button type="button">Editar</button>
     <details>
         <summary>Adicionar</summary>
         <div style="border: 1px solid #ccc; padding: 10px; margin-top: 5px; display: flex; flex-direction: column; gap: 10px; width: fit-content;">
